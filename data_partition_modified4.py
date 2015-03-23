@@ -62,6 +62,22 @@ def WriteListToCSV(filename_path,listname):
 		
     runnumberfile.close()
   
+def write_array_to_csv(filename_path,listname):
+#    import csv
+     
+    runnumberfile=open(filename_path,'w',newline='')
+    wr=csv.writer(runnumberfile,quoting=csv.QUOTE_ALL)
+    if type(listname)==list:
+        for item in listname:
+            wr.writerow([item])
+    elif type(listname)==np.ndarray:
+        for item in listname:
+            wr.writerow(item)
+    else:
+        print("the structure you are writing is neither a list nor an np.ndarray")
+		
+    runnumberfile.close()
+    
 def ensure_dir(f):
 #    import os
     d=os.path.abspath(f)
@@ -173,7 +189,7 @@ try:
                 categorylist[section[j]:(section[j+1])]=6*np.ones((section[j+1]-section[j]))              
             else: 
                 categorylist[section[j]:(section[j+1])]=6*np.ones((section[j+1]-section[j]))
-#test                       
+                       
     if k==1:
         intv=np.zeros((2,2))
         intv[1,0]=np.count_nonzero(categorylist==categorylist[-2])
@@ -199,6 +215,23 @@ try:
         
     complete_path_to_save_segmentlist=os.path.normpath(os.path.join(complete_dirpath_to_save_segmentlist,files_in_folder[u]))   
     WriteListToCSV(complete_path_to_save_segmentlist,categorylist)
+    
+    rrr=len(intv)-np.count_nonzero(intv[:,1]==0)
+    p=0
+    intva=np.zeros((rrr,3))
+    for j in range(1,7):
+        for i in range(1,r+1):
+            if intv[i,1]==j:
+                intva[p,0]=j
+                intva[p,1]=intv[i-1,0]
+                intva[p,2]=intv[i,0]-1
+                p=p+1
+            else:
+                p=p
+    
+    figure_filename2=files_in_folder[u].replace('setpoint','segmentation')
+    complete_path_to_save_segmentationlist=os.path.normpath(os.path.join(complete_dirpath_to_save_segmentlist,figure_filename2))
+    write_array_to_csv(complete_path_to_save_segmentationlist,intva)
 
 except ValueError:
     print('Error!!!')
