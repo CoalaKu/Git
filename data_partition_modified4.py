@@ -71,8 +71,12 @@ def write_array_to_csv(filename_path,listname):
         for item in listname:
             wr.writerow([item])
     elif type(listname)==np.ndarray:
-        for item in listname:
-            wr.writerow(item)
+        if len(listname.shape)==1:
+            for item in listname:
+                wr.writerow([item])
+        else:
+            for item in listname:
+                wr.writerow(item)
     else:
         print("the structure you are writing is neither a list nor an np.ndarray")
 		
@@ -214,7 +218,7 @@ try:
     intv=np.concatenate((np.zeros((1,2)),intv),axis=0)
         
     complete_path_to_save_segmentlist=os.path.normpath(os.path.join(complete_dirpath_to_save_segmentlist,files_in_folder[u]))   
-    WriteListToCSV(complete_path_to_save_segmentlist,categorylist)
+    write_array_to_csv(complete_path_to_save_segmentlist,categorylist)
     
     rrr=len(intv)-np.count_nonzero(intv[:,1]==0)
     p=0
