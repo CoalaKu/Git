@@ -218,13 +218,14 @@ try:
     
     rrr=len(intv)-np.count_nonzero(intv[:,1]==0)
     p=0
-    intva=np.zeros((rrr,3))
+    intva=np.zeros((rrr,4))
     for j in range(1,7):
         for i in range(1,r+1):
             if intv[i,1]==j:
                 intva[p,0]=j
                 intva[p,1]=intv[i-1,0]
                 intva[p,2]=intv[i,0]-1
+                intva[p,3]=intva[p,2]-intva[p,1]
                 p=p+1
             else:
                 p=p
