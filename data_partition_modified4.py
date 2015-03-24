@@ -141,19 +141,31 @@ single_file_path=os.path.join(setpoint_folder, files_in_folder[u])
     
 try:
     xxx=get_variable_from_csv_alternative(single_file_path, 'StepLabel')
-    
+    AA=get_variable_from_csv(single_file_path, sensor_variables)
+
+#test zero_step    
     mmm=np.zeros((np.shape(xxx)[0],1))
+    mmmm=np.zeros((np.shape(xxx)[0],1))
         
     for i in range(len(mmm)):
-        mmm[i]=xxx[i].split(".")[0] 
-
-    AA=get_variable_from_csv(single_file_path, sensor_variables)
+        mmm[i]=xxx[i].split(".")[0]
+        try:
+            mmmm[i]=xxx[i].split(".")[1]
+        except:
+            mmmm[i]=0
         
-    modified_length=adjusted_length(single_file_path)   
-        
-    A=np.zeros((modified_length,1))
-    m=np.zeros((modified_length,1))
-
+    zero_step=0
+    for i in range(len(mmm)-1):
+        if mmm[i]>mmm[i+1]:
+            zero_step=(i+1)
+            break
+        elif mmm[i]==mmm[i+1] and mmmm[i]>mmmm[i+1]:
+            zero_step=(i+1)
+            break
+   
+    ultimate_length=np.shape(xxx)[0]    
+    modified_length=ultimate_length-int(zero_step)
+#---------------------------------------------    
     
     A=AA[-modified_length:]
     m=mmm[-modified_length:]
