@@ -87,9 +87,9 @@ def extract_serial_number(filename):
     value_of_number=int(serial_number_string)
     return value_of_number
 
-def zero_step_and_count(step_steplabel_file_path):
+def zero_step_and_count(steplabel_file_path):
 #    import numpy as np    
-    xxx=read_single_variable_as_stringlist_csv(single_file_path, 'StepLabel')
+    xxx=read_single_variable_as_stringlist_csv(steplabel_file_path, 'StepLabel')
     mmm=np.zeros((np.shape(xxx)[0],1))
     mmmm=np.zeros((np.shape(xxx)[0],1))
         
