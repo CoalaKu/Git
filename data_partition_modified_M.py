@@ -153,10 +153,8 @@ try:
     for i in range(0,(modified_length-1)):
         A_difference[i] = A[i+1] - A[i]
     
-    n=int(max(m))
     for k in range(len(A_difference)):
-        for i in range(1, n):
-            if math.fabs(A_difference[k]) <= 0.01:
+        if math.fabs(A_difference[k]) <= 0.01:
                 m[k+1] = m[k]    
     
     uu,uuu=np.unique(m,return_counts=True)
