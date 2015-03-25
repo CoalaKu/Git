@@ -37,7 +37,7 @@ def get_variable_from_csv(csvpathfilename, listofvariablename):
         
     return variablearrays    
 
-def get_variable_from_csv_alternative(csvpathfilename, listofvariablename):       
+def read_single_variable_as_stringlist_csv(csvpathfilename, listofvariablename):       
     notfirst=1
     thelist=[]
     
@@ -87,9 +87,9 @@ def extract_serial_number(filename):
     value_of_number=int(serial_number_string)
     return value_of_number
 
-def adjusted_length(step_steplabel_file_path):
+def zero_step_and_count(step_steplabel_file_path):
 #    import numpy as np    
-    xxx=get_variable_from_csv_alternative(single_file_path, 'StepLabel')
+    xxx=read_single_variable_as_stringlist_csv(single_file_path, 'StepLabel')
     mmm=np.zeros((np.shape(xxx)[0],1))
     mmmm=np.zeros((np.shape(xxx)[0],1))
         
@@ -143,7 +143,7 @@ single_file_path=os.path.join(setpoint_folder, files_in_folder[u])
 try:    
     AA=get_variable_from_csv(single_file_path, sensor_variables)
         
-    modified_length, mmm=adjusted_length(single_file_path)  
+    modified_length, mmm=zero_step_and_count(single_file_path)  
    
     A=AA[-modified_length:]
     m=mmm[-modified_length:]
