@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Mar 18 10:00:54 2015
+Created on Wed Mar 25 08:51:34 2015
 
 @author: A30330
 """
+
 #########################################################################################################
 ###      #####  #####        #####       ###############    #   ###  ###       ###       ################
 ###  #########  ########  ########  ####################  #  #  ###  ###  ###  ###  ###  ################
@@ -19,7 +20,7 @@ import time
 import csv
 import numpy as np
 import re
-
+import math
 #########################################################################################################
 #######################################   FUNCTIONS   ###################################################
 #########################################################################################################
@@ -116,11 +117,11 @@ def adjusted_length(step_steplabel_file_path):
 #########################################################################################################
 
 #intialize "sensor variable of interest","folder to accesss", and "folder to save output to"
-sensor_variables=['Heater.temp']#-------------------------------------"sensor variable of interest"
-setpoint_folder='D://Heater//setpoint'
-current_folder='D://Heater//setpoint'
-output_folder='D://Heater//Output'
-serial_number=1679
+sensor_variables=['TMAl_1.source']#-------------------------------------"sensor variable of interest"
+setpoint_folder='D://HCKu//TMAlgroupTEST//setpoint'
+current_folder='D://HCKu//TMAlgroupTEST//setpoint'
+output_folder='D://HCKu//TMAlgroupTEST//Output'
+serial_number=1
 
 #########################################################################################################
 #######################################   MAIN PROGRAM   ################################################
@@ -151,7 +152,13 @@ try:
     A_difference = np.zeros(((modified_length-1),1))
     for i in range(0,(modified_length-1)):
         A_difference[i] = A[i+1] - A[i]
-      
+    
+    n=int(max(m))
+    for k in range(0, (modified_length-1)):
+        for i in range(1, n):
+            if math.fabs(A[k+1] - A[k]) <= 0.01:
+                m[k+1] = m[k]    
+    
     uu,uuu=np.unique(m,return_counts=True)
     k=len(uuu)
         
